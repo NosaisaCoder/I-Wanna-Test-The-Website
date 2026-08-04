@@ -177,9 +177,9 @@
 <body>
 
     <!-- Hidden Background Audio Player Engine Element -->
+    <!-- Updated with your exact music filename -->
     <audio id="menuMusic" autoplay loop>
-        <source src="I Wanna Test The Game - Difficult Selection.mp3
-" type="audio/mpeg">
+        <source src="I Wanna Test The Game - Difficult Selection.mp3" type="audio/mpeg">
     </audio>
 
     <div class="header-container">
@@ -192,7 +192,6 @@
         <!-- Easy Setting Selection Group -->
         <div class="difficulty-card easy-card">
             <div class="card-title">Easy</div>
-            <!-- Update inline styles below replacing background URLs with final image path names -->
             <div class="image-viewport" style="background-image: url('easy_preview.png'); background-color: #333;"></div>
             <div class="card-desc">For players that want a super duper easy playthrough.</div>
             <div class="play-row">
@@ -226,12 +225,44 @@
         window.addEventListener('DOMContentLoaded', () => {
             const audio = document.getElementById('menuMusic');
             
-            // Forces audio stream ignition on first initial mouse movement window interaction click action
-            document.body.addEventListener('click', () => {
+            // Force the audio file to pre-load its data
+            audio.preload = "auto";
+            audio.load();
+
+            // Function that attempts to start the music engine
+            function startMusic() {
                 if (audio.paused) {
-                    audio.play().catch(err => console.log("Audio play request handled:", err));
+                    audio.play()
+                        .then(() => {
+                            console.log("Music successfully playing.");
+                            removeInteractionListeners();
+                        })
+                        .catch(err => {
+                            console.log("Waiting for user interaction click:", err);
+                        });
                 }
-            }, { once: true });
+            }
+
+            // Attach multiple listener types so ANY click or touch triggers it
+            function addInteractionListeners() {
+                document.body.addEventListener('click', startMusic);
+                document.body.addEventListener('touchstart', startMusic);
+                document.body.addEventListener('keydown', startMusic);
+            }
+
+            function removeInteractionListeners() {
+                document.body.removeEventListener('click', startMusic);
+                document.body.removeEventListener('touchstart', startMusic);
+                document.body.removeEventListener('keydown', startMusic);
+            }
+
+            // Initialize the listeners immediately
+            addInteractionListeners();
+            
+            // Try playing immediately case the click from index.html is carried over
+            setTimeout(() => {
+                startMusic();
+            }, 100);
         });
     </script>
 </body>
