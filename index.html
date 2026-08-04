@@ -5,68 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I Wanna Test The Game</title>
     <style>
-        /* Base page styling to match the dark, retro game menu atmosphere */
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Times New Roman', Times, serif;
+        /* Forces the body to strictly consume 100% of the display window height and width */
+        html, body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            overflow: hidden; /* Stops accidental scrollbars from ruining full-screen look */
+        }
+
+        body {
+            color: #ffffff;
+            font-family: 'Times New Roman', Times, serif;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
             user-select: none;
+            -webkit-user-select: none;
         }
 
-        /* Container to structure the layout into two columns */
+        /* Large master container stretched across the viewport */
         .menu-container {
-            width: 90%;
-            max-width: 1000px;
+            width: 100%;
+            height: 100%;
+            max-width: 1600px; /* Comfort scale threshold for ultra-wide desktop monitors */
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            box-sizing: border-box;
+            padding: 0 8%; /* Creates clean spacing gaps along the screen edges */
         }
 
-        /* Left Side: Text and Navigation */
+        /* Left Split Panel - Handles Titles and Interaction Options */
         .menu-text {
-            flex: 1;
+            flex: 1.2;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            height: 100%;
         }
 
         /* Main Game Title Header */
         h1 {
-            font-size: 3.5rem;
+            font-size: 5.2rem; /* Massive typography scaled up for large displays */
             font-weight: normal;
-            line-height: 1.2;
+            line-height: 1.1;
             margin: 0;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
 
         /* Secondary Beta Test Text Element */
         .beta-text {
             color: #ff0000;
-            font-size: 3rem;
-            margin-top: 5px;
-            margin-bottom: 60px;
+            font-size: 4.5rem;
+            margin-top: 10px;
+            margin-bottom: 8vh; /* Dynamically scales the margin spacing based on display height */
             text-transform: uppercase;
         }
 
-        /* Game Navigation Menu Group */
+        /* Game Navigation Menu Option Layout */
         .menu-options {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
         }
 
         /* Individual Interactive Menu Links */
         .menu-btn {
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 1.8rem;
+            font-size: 2.5rem; /* Larger, easy-to-read choices */
             font-weight: bold;
             text-decoration: none;
             text-transform: uppercase;
@@ -83,10 +90,10 @@
 
         /* Specific Color for Load Game Option */
         .load-game {
-            color: #555555;
+            color: #444444; /* Darker gray to clearly match unclickable/inactive state look */
         }
 
-        /* Hover and Active State Interaction Effects */
+        /* Hover and Click Animation Feedback Loops */
         .menu-btn:hover {
             opacity: 0.8;
             transform: scale(1.05);
@@ -96,11 +103,21 @@
             transform: scale(0.98);
         }
 
-        /* Right Side: Graphic Visual Elements */
+        /* Right Split Panel - Centers Graphic Visual Elements */
         .menu-graphics {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
-            width: 400px;
-            height: 400px;
+        }
+
+        /* Scale wrapper to keep graphics locked together relative to each other */
+        .graphics-wrapper {
+            position: relative;
+            width: 500px;
+            height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -108,7 +125,7 @@
 
         /* Main Placeholder Image for the Character Head */
         .noob-head {
-            width: 320px;
+            width: 440px; /* Scaled up to balance out the larger screen text sizing */
             height: auto;
             display: block;
         }
@@ -116,62 +133,74 @@
         /* Overlay Pixel Art Apple Graphic Asset */
         .pixel-apple {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 140px;
+            bottom: 10px;
+            right: 15px;
+            width: 180px;
             height: auto;
-            /* Rendering rules to preserve hard edges of classic pixel art */
+            /* Rendering rules to preserve crisp hard edges of pixel art textures */
             image-rendering: pixelated;
             image-rendering: crisp-edges;
         }
 
-        /* Responsive Breakpoints for Smaller Mobile Screens */
+        /* Responsive adjustments to drop back down gracefully on smaller laptops or tablet screens */
+        @media (max-width: 1200px) {
+            h1 { font-size: 3.8rem; }
+            .beta-text { font-size: 3.2rem; }
+            .menu-btn { font-size: 2rem; }
+            .graphics-wrapper { width: 380px; height: 380px; }
+            .noob-head { width: 320px; }
+            .pixel-apple { width: 140px; }
+        }
+
+        /* Tablet/Mobile vertical stack layout fallback safety configuration */
         @media (max-width: 768px) {
-            body {
-                align-items: flex-start;
-                padding-top: 40px;
-                overflow-y: auto;
-            }
             .menu-container {
                 flex-direction: column;
-                text-align: center;
-                gap: 40px;
+                padding: 40px 20px;
             }
             .menu-text {
+                flex: 1;
                 align-items: center;
+                text-align: center;
+                justify-content: flex-start;
+                margin-top: 40px;
             }
-            h1 { font-size: 2.2rem; }
-            .beta-text { font-size: 1.8rem; margin-bottom: 30px; }
-            .menu-btn { font-size: 1.5rem; }
+            .beta-text { margin-bottom: 40px; }
             .menu-options { align-items: center; }
-            .menu-graphics { width: 280px; height: 280px; }
-            .noob-head { width: 220px; }
-            .pixel-apple { width: 100px; bottom: 10px; right: 10px; }
+            .menu-graphics {
+                flex: 1;
+                align-items: flex-start;
+            }
+            .graphics-wrapper { width: 300px; height: 300px; }
+            .noob-head { width: 250px; }
+            .pixel-apple { width: 110px; bottom: 15px; right: 15px; }
         }
     </style>
 </head>
 <body>
 
     <div class="menu-container">
-        <!-- Title and Button Selection Column -->
+        <!-- Main Title and Option Mechanics -->
         <div class="menu-text">
             <h1>I Wanna<br>Test The Game</h1>
             <div class="beta-text">(Beta Test)</div>
             
             <div class="menu-options">
-                <!-- Points directly to your difficulty choice subpage -->
+                <!-- Action Route links straight over to your difficulty selection screen -->
                 <a href="difficulty.html" class="menu-btn new-game">New Game</a>
                 <a href="#" class="menu-btn load-game">Load Game</a>
             </div>
         </div>
 
-        <!-- Graphic Image Column -->
+        <!-- Character Display Visual Column Area -->
         <div class="menu-graphics">
-            <!-- Ensure your uploaded file in the GitHub repository matches this exact filename format -->
-            <img src="noob_head.png" alt="Noob Head" class="noob-head">
-            
-            <!-- Standard base64 embedded pixel apple vector to keep the file fully functional immediately -->
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 14 15' width='14' height='15'><path d='M6,0 h2 v2 h-2 z M5,2 h4 v1 h-4 z M4,3 h1 v1 h-1 z M9,3 h1 v1 h-1 z M3,4 h2 v1 h-2 z M9,4 h2 v1 h-2 z M2,5 h10 v1 h-10 z M1,6 h12 v3 h-12 z M2,9 h10 v1 h-10 z M3,10 h8 v1 h-8 z M4,11 h6 v1 h-6 z M5,12 h4 v1 h-4 z M2,13 h3 v1 h-3 z M9,13 h3 v1 h-3 z M3,14 h1 v1 h-1 z M10,14 h1 v1 h-1 z' fill='%23aa0000'/><path d='M3,5 h1 v1 h-1 z M2,6 h1 v3 h-1 z M3,9 h1 v1 h-1 z M4,10 h1 v1 h-1 z M5,11 h1 v1 h-1 z M6,12 h2 v1 h-2 z M8,11 h1 v1 h-1 z M9,10 h1 v1 h-1 z M10,9 h1 v1 h-1 z M11,6 h1 v3 h-1 z M10,5 h1 v1 h-1 z M5,4 h4 v1 h-4 z' fill='%23ff2222'/><path d='M3,6 h1 v1 h-1 z M4,5 h1 v1 h-1 z' fill='%23ffffff'/><path d='M7,1 h1 v1 h-1 z' fill='%23553311'/><path d='M8,0 h1 v1 h-1 z M9,1 h1 v1 h-1 z' fill='%2311aa11'/></svg>" alt="Pixel Apple" class="pixel-apple">
+            <div class="graphics-wrapper">
+                <!-- Ensure your uploaded file in the GitHub repository matches this exact lowercase filename format -->
+                <img src="noob_head.png" alt="Noob Head" class="noob-head">
+                
+                <!-- Embedded native pixel apple layout vector data blueprint asset -->
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 14 15' width='14' height='15'><path d='M6,0 h2 v2 h-2 z M5,2 h4 v1 h-4 z M4,3 h1 v1 h-1 z M9,3 h1 v1 h-1 z M3,4 h2 v1 h-2 z M9,4 h2 v1 h-2 z M2,5 h10 v1 h-10 z M1,6 h12 v3 h-12 z M2,9 h10 v1 h-10 z M3,10 h8 v1 h-8 z M4,11 h6 v1 h-6 z M5,12 h4 v1 h-4 z M2,13 h3 v1 h-3 z M9,13 h3 v1 h-3 z M3,14 h1 v1 h-1 z M10,14 h1 v1 h-1 z' fill='%23aa0000'/><path d='M3,5 h1 v1 h-1 z M2,6 h1 v3 h-1 z M3,9 h1 v1 h-1 z M4,10 h1 v1 h-1 z M5,11 h1 v1 h-1 z M6,12 h2 v1 h-2 z M8,11 h1 v1 h-1 z M9,10 h1 v1 h-1 z M10,9 h1 v1 h-1 z M11,6 h1 v3 h-1 z M10,5 h1 v1 h-1 z M5,4 h4 v1 h-4 z' fill='%23ff2222'/><path d='M3,6 h1 v1 h-1 z M4,5 h1 v1 h-1 z' fill='%23ffffff'/><path d='M7,1 h1 v1 h-1 z' fill='%23553311'/><path d='M8,0 h1 v1 h-1 z M9,1 h1 v1 h-1 z' fill='%2311aa11'/></svg>" alt="Pixel Apple" class="pixel-apple">
+            </div>
         </div>
     </div>
 
