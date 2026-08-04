@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Wanna Test The Game</title>
+    <style>
+        /* Base page styling to match the dark, retro game menu atmosphere */
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* Container to structure the layout into two columns */
+        .menu-container {
+            width: 90%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Left Side: Text and Navigation */
+        .menu-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Main Game Title Header */
+        h1 {
+            font-size: 3.5rem;
+            font-weight: normal;
+            line-height: 1.2;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Secondary Beta Test Text Element */
+        .beta-text {
+            color: #ff0000;
+            font-size: 3rem;
+            margin-top: 5px;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+        }
+
+        /* Game Navigation Menu Group */
+        .menu-options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Individual Interactive Menu Links */
+        .menu-btn {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.1s ease, opacity 0.2s ease;
+            width: fit-content;
+        }
+
+        /* Specific Color for New Game Option */
+        .new-game {
+            color: #ffffff;
+        }
+
+        /* Specific Color for Load Game Option */
+        .load-game {
+            color: #555555;
+        }
+
+        /* Hover and Active State Interaction Effects */
+        .menu-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .menu-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Right Side: Graphic Visual Elements */
+        .menu-graphics {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Placeholder Image for the Character Head */
+        .noob-head {
+            width: 320px;
+            height: auto;
+            display: block;
+        }
+
+        /* Overlay Pixel Art Apple Graphic Asset */
+        .pixel-apple {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 140px;
+            height: auto;
+            /* Rendering rules to preserve hard edges of classic pixel art */
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        /* Responsive Breakpoints for Smaller Mobile Screens */
+        @media (max-width: 768px) {
+            body {
+                align-items: flex-start;
+                padding-top: 40px;
+                overflow-y: auto;
+            }
+            .menu-container {
+                flex-direction: column;
+                text-align: center;
+                gap: 40px;
+            }
+            .menu-text {
+                align-items: center;
+            }
+            h1 { font-size: 2.2rem; }
+            .beta-text { font-size: 1.8rem; margin-bottom: 30px; }
+            .menu-btn { font-size: 1.5rem; }
+            .menu-options { align-items: center; }
+            .menu-graphics { width: 280px; height: 280px; }
+            .noob-head { width: 220px; }
+            .pixel-apple { width: 100px; bottom: 10px; right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-container">
+        <!-- Title and Button Selection Column -->
+        <div class="menu-text">
+            <h1>I Wanna<br>Test The Game</h1>
+            <div class="beta-text">(Beta Test)</div>
+            
+            <div class="menu-options">
+                
+                <a href="#" class="menu-btn new-game">New Game</a>
+                <a href="#" class="menu-btn load-game">Load Game</a>
+            </div>
+        </div>
+
+        <!-- Graphic Image Column -->
+        <div class="menu-graphics">
+            <img src="noob_head.png" alt="Noob Head" class="noob-head">
+            
+            <!-- Standard base64 embedded pixel apple vector to keep the file fully functional immediately -->
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 14 15' width='14' height='15'><path d='M6,0 h2 v2 h-2 z M5,2 h4 v1 h-4 z M4,3 h1 v1 h-1 z M9,3 h1 v1 h-1 z M3,4 h2 v1 h-2 z M9,4 h2 v1 h-2 z M2,5 h10 v1 h-10 z M1,6 h12 v3 h-12 z M2,9 h10 v1 h-10 z M3,10 h8 v1 h-8 z M4,11 h6 v1 h-6 z M5,12 h4 v1 h-4 z M2,13 h3 v1 h-3 z M9,13 h3 v1 h-3 z M3,14 h1 v1 h-1 z M10,14 h1 v1 h-1 z' fill='%23aa0000'/><path d='M3,5 h1 v1 h-1 z M2,6 h1 v3 h-1 z M3,9 h1 v1 h-1 z M4,10 h1 v1 h-1 z M5,11 h1 v1 h-1 z M6,12 h2 v1 h-2 z M8,11 h1 v1 h-1 z M9,10 h1 v1 h-1 z M10,9 h1 v1 h-1 z M11,6 h1 v3 h-1 z M10,5 h1 v1 h-1 z M5,4 h4 v1 h-4 z' fill='%23ff2222'/><path d='M3,6 h1 v1 h-1 z M4,5 h1 v1 h-1 z' fill='%23ffffff'/><path d='M7,1 h1 v1 h-1 z' fill='%23553311'/><path d='M8,0 h1 v1 h-1 z M9,1 h1 v1 h-1 z' fill='%2311aa11'/></svg>" alt="Pixel Apple" class="pixel-apple">
+        </div>
+    </div>
+
+</body>
+</html>
